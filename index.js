@@ -28,7 +28,8 @@ const idStr = 'taro_yamada@gmail.com';
 const pwStrPatterns = [
   'aaa',
   'bbbbbbb',
-  'cccccccc'
+  'cccccccc',
+  'ddd'
 ];
 
 const autoLogin = (id, pw) => {
@@ -50,19 +51,21 @@ const autoLogin = (id, pw) => {
         const $trigger = driver.findElement(By.id('js-trigger'));
 
         $id.sendKeys(idStr);
+        console.log('pwStrPatterns[index]', pwStrPatterns[index]);
         $pw.sendKeys(pwStrPatterns[index]);
         $trigger.click()
         
         .then(async () => {
 
           const currentUrl = await driver.getCurrentUrl();
-          if(index < pwLen){
+          if(currentUrl === URL){
+          // if(index < pwLen){
             // failed
             console.log('index', index);
-            tryLogin(callback);
             index++;
+            tryLogin(callback);
           } else {
-            //} else(currentUrl === URL){
+            //if(currentUrl === URL){
             //Success
             console.log('Success!');
           }
