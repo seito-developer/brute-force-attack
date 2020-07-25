@@ -23,35 +23,48 @@ capabilities.set('chromeOptions', {
         // other chrome options
     ]
 });
+
+const idStr = 'taro_yamada@gmail.com';
+const pwStrPatterns = [
+  'aaa',
+  'bbbbbbb',
+  'cccccccc'
+];
+
 const autoLogin = (id, pw) => {
   const driver = new Builder().withCapabilities(capabilities).build();
 
   driver.get(URL)
   .then(() => {
-    const $id = driver.findElement(By.id('loginInner_u'));
-    const $pw = driver.findElement(By.id('loginInner_p'));
-    const $trigger = driver.findElement(By.id('js-trigger'));
     
     // const limit = 10;
     // let index = 0;
     // while(index < limit){
       let index = 0;
       const DummyLen = 3;
+      const pwLen = pwStrPatterns.length;
       const tryLogin = (callback) => {
-        $id.sendKeys('test');
-        $pw.sendKeys('test');
+
+        const $id = driver.findElement(By.id('loginInner_u'));
+        const $pw = driver.findElement(By.id('loginInner_p'));
+        const $trigger = driver.findElement(By.id('js-trigger'));
+
+        $id.sendKeys(idStr);
+        $pw.sendKeys(pwStrPatterns[index]);
         $trigger.click()
+        
         .then(async () => {
 
           const currentUrl = await driver.getCurrentUrl();
-          if(index > DummyLen){
-          // if(currentUrl === URL){
+          if(index < pwLen){
+            // failed
+            console.log('index', index);
+            tryLogin(callback);
+            index++;
+          } else {
+            //} else(currentUrl === URL){
             //Success
             console.log('Success!');
-          } else {
-            index++;
-            // failed
-            tryLogin(callback);
           }
         })
         .catch((err) => {
