@@ -26,13 +26,16 @@ let pwLen;
 const handlehack = async () => {
 
   pwStrPatterns = await bf({
-    // len: 10,
+    len: 8,
     // chars: ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z', '1','2','3','4','5','6','7','8','9','0'],
-    len: 3,
-    chars: ['aaa', 'bbb'],
+    chars: ['a', '0', 'j', '8', '9', 'b', 'c', 'd'],
     step: console.log
+    // len: 3,
+    // chars: ['a','b','c', '0', '1', '2']
   });
 
+  //output
+  console.log('pwStrPatterns', pwStrPatterns);
   console.log('pwStrPatterns.length', pwStrPatterns.length);
     
   //2.成功するまでひたすらパスワードを入力し、ログインを試し続ける自動スクリプト
